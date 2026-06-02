@@ -1,12 +1,14 @@
+/* --- FUNDO E ALINHAMENTO GERAL --- */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f8ff; /* Azul bem clarinho, agradável para a visão */
+  background-color: #f0f8ff; /* Azul clarinho confortável */
   font-family: Arial, sans-serif;
 }
 
+/* --- O CARTÃO PRINCIPAL --- */
 .card-missao {
   background: white;
   padding: 40px;
@@ -15,20 +17,22 @@
   text-align: center;
   max-width: 500px;
   width: 90%;
+  animation: fadeIn 0.4s ease-in-out;
 }
 
 h2 {
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .texto-leitura {
-  font-size: 32px; /* Letra grande para facilitar a leitura */
+  font-size: 32px;
   font-weight: bold;
   color: #2c3e50;
   margin: 30px 0;
 }
 
+/* --- DESTAQUE DA RECOMPENSA --- */
 .recompensa {
   background-color: #e8f8f5;
   padding: 15px;
@@ -37,8 +41,8 @@ h2 {
   margin-bottom: 30px;
 }
 
-.btn-concluir {
-  background-color: #3498db;
+/* --- BOTÕES --- */
+.btn-concluir, .btn-salvar {
   color: white;
   border: none;
   padding: 15px 30px;
@@ -47,9 +51,85 @@ h2 {
   cursor: pointer;
   width: 100%;
   font-weight: bold;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.1s;
+}
+
+.btn-concluir {
+  background-color: #3498db;
 }
 
 .btn-concluir:hover {
   background-color: #2980b9;
+}
+
+.btn-salvar {
+  background-color: #27ae60;
+  margin-top: 15px;
+}
+
+.btn-salvar:hover {
+  background-color: #219a52;
+}
+
+.btn-concluir:active, .btn-salvar:active {
+  transform: scale(0.98); /* Dá um efeitinho de clique macio */
+}
+
+/* --- ESTILOS DO FORMULÁRIO (A TELINHA NOVA) --- */
+.campo-form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.campo-form label {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.campo-form input[type="number"],
+.campo-form select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.campo-form input[type="number"]:focus,
+.campo-form select:focus {
+  border-color: #3498db; /* Borda azul ao clicar no campo */
+}
+
+.campo-form input[type="range"] {
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.nivel-texto {
+  font-size: 15px;
+  color: #e74c3c;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* --- TELA DE SUCESSO --- */
+.sucesso h2 {
+  color: #f39c12;
+  font-size: 36px;
+}
+
+/* --- ANIMAÇÃO SUAVE AO MUDAR DE TELA --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

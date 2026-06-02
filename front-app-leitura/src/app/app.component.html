@@ -1,22 +1,62 @@
 <main class="container">
 
-  <div class="card-missao" *ngIf="atividade">
+  @if (atividade && !mostrarTelinha && !sucesso) {
+  <div class="card-missao">
     <h2>Missão de Leitura</h2>
-
     <p class="texto-leitura">{{ atividade.textoCurto }}</p>
-
     <div class="recompensa">
       <span>🏆 Recompensa: </span>
       <strong>{{ atividade.descricaoRecompensa }}</strong>
     </div>
 
-    <button class="btn-concluir">
+    <button class="btn-concluir" (click)="abrirTelinha()">
       Concluí a leitura!
     </button>
   </div>
 
-  <div *ngIf="!atividade">
+  } @else if (mostrarTelinha) {
+  <div class="card-missao">
+    <h2>Avaliação do Adulto</h2>
+    <p>Como foi o desempenho na leitura?</p>
+
+    <div class="campo-form">
+      <label>Tempo gasto (em minutos):</label>
+      <input type="number" [(ngModel)]="tempoGastoMinutos" min="1">
+    </div>
+
+    <div class="campo-form">
+      <label>Precisou de ajuda?</label>
+      <select [(ngModel)]="precisouAjuda">
+        <option value="false">Não, leu sozinho</option>
+        <option value="true">Sim, precisei ajudar</option>
+      </select>
+    </div>
+
+    <div class="campo-form">
+      <label>Nível de irritabilidade (1 a 5):</label>
+      <input type="range" [(ngModel)]="nivelIrritabilidade" min="1" max="5">
+      <span class="nivel-texto">Nível selecionado: {{ nivelIrritabilidade }}</span>
+    </div>
+
+    <button class="btn-salvar" (click)="salvarSessao()">
+      Salvar e Liberar Recompensa!
+    </button>
+  </div>
+
+  } @else if (sucesso) {
+  <div class="card-missao sucesso">
+    <h2>🎉 Parabéns!</h2>
+    <p class="texto-leitura">Desafio concluído!</p>
+    <div class="recompensa">
+      <span>🏆 Pode aproveitar os: </span><br>
+      <strong>{{ atividade.descricaoRecompensa }}</strong>
+    </div>
+  </div>
+
+  } @else {
+  <div>
     <p>A carregar a próxima missão...</p>
   </div>
+  }
 
 </main>

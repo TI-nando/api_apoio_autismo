@@ -1,37 +1,69 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'; // <-- Essencial para os inputs da telinha
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule], // Necessário para usar variáveis no HTML
+  imports: [CommonModule, FormsModule], // <-- FormsModule adicionado aqui
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
 
-  // Variável que vai guardar os dados que chegam do Java
   atividade: any = null;
 
-  // Injeta o HttpClient no construtor
-  constructor(private http: HttpClient) {}
+  // Variáveis que controlam qual tela aparece (o HTML estava sentindo falta delas!)
+  mostrarTelinha = false;
+  sucesso = false;
 
-  // O ngOnInit corre automaticamente assim que o ecrã abre
+  // Variáveis para guardar os dados que você preencher no formulário
+  tempoGastoMinutos: number = 2;
+  precisouAjuda: string = 'false';
+  nivelIrritabilidade: number = 1;
+
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
+
   ngOnInit(): void {
     this.buscarMissao();
   }
 
   buscarMissao() {
-    // Faz um pedido GET à nossa API Java
     this.http.get('http://localhost:8080/api/atividades/proxima')
       .subscribe({
         next: (dados) => {
-          this.atividade = dados; // Guarda os dados recebidos
-          console.log('Missão carregada:', this.atividade);
+          this.atividade = dados;
+          this.cdr.detectChanges();
+        },
+        error: (erro) => console.error('Erro ao buscar a missão:', erro)
+      });
+  }
+
+  // Função chamada ao clicar em "Concluí a leitura!"
+  abrirTelinha() {
+    this.mostrarTelinha = true;
+    this.cdr.detectChanges();
+  }
+
+  // Função chamada para enviar a avaliação para o Java
+  salvarSessao() {
+    const payload = {
+      tempoGastoSegundos: this.tempoGastoMinutos * 60,
+      precisouAjuda: this.precisouAjuda === 'true',
+      nivelIrritabilidade: Number(this.nivelIrritabilidade)
+    };
+
+    this.http.post(`http://localhost:8080/api/atividades/${this.atividade.id}/concluir`, payload)
+      .subscribe({
+        next: () => {
+          this.sucesso = true;
+          this.mostrarTelinha = false;
+          this.cdr.detectChanges();
         },
         error: (erro) => {
-          console.error('Erro ao buscar a missão. O backend está ligado?', erro);
+          console.error('Erro ao salvar a sessão no banco:', erro);
+          alert('Deu erro ao salvar! Veja o console.');
         }
       });
   }
