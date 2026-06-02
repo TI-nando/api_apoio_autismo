@@ -1,0 +1,22 @@
+<main class="container">
+
+  <div class="card-missao" *ngIf="atividade">
+    <h2>Missão de Leitura</h2>
+
+    <p class="texto-leitura">{{ atividade.textoCurto }}</p>
+
+    <div class="recompensa">
+      <span>🏆 Recompensa: </span>
+      <strong>{{ atividade.descricaoRecompensa }}</strong>
+    </div>
+
+    <button class="btn-concluir">
+      Concluí a leitura!
+    </button>
+  </div>
+
+  <div *ngIf="!atividade">
+    <p>A carregar a próxima missão...</p>
+  </div>
+
+</main>
