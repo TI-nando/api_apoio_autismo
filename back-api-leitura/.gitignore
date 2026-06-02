@@ -1,0 +1,54 @@
+### Spring Boot Standard ###
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IDEs ###
+# STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# VS Code
+.vscode/
+
+### SEGURANÇA E AMBIENTE (Adicionados) ###
+# Ignora arquivos de variáveis de ambiente que contêm senhas
+.env
+.env.*
+*.env
+
+# Ignora arquivos de propriedades específicos de produção/senhas
+application-secret.properties
+application-prod.properties
+application-prod.yml
+
+### LOGS E SISTEMA OPERACIONAL (Adicionados) ###
+# Ignora arquivos de log gerados pela aplicação
+*.log
+
+# Ignora arquivos ocultos do Windows e macOS
+.DS_Store
+Thumbs.db
