@@ -21,7 +21,7 @@ public class ApiLeituraApplication {
 			// criado a primeira missao focando no MVP.
 			AtividadeLeitura missao1 = new AtividadeLeitura();
 			missao1.setTextoCurto("O menino joga bola");
-			missao1.setUrlImagemApoio("url-da-imagem-bola.jpg");
+			missao1.setUrlImagemApoio("https://cdn-icons-png.flaticon.com/512/8655/8655160.png");
 			missao1.setNivelDificuldade(1);
 			missao1.setDescricaoRecompensa("15 minutos de video game");
 

@@ -3,6 +3,10 @@
   @if (atividade && !mostrarTelinha && !sucesso) {
   <div class="card-missao">
     <h2>Missão de Leitura</h2>
+
+    @if (atividade.urlImagemApoio) {
+    <img [src]="atividade.urlImagemApoio" alt="Imagem de apoio visual" class="imagem-apoio">
+    }
     <p class="texto-leitura">{{ atividade.textoCurto }}</p>
     <div class="recompensa">
       <span>🏆 Recompensa: </span>

@@ -21,11 +21,13 @@ public class AtividadeLeitura {
     @Column(nullable = false, length = 500)
     private String textoCurto;
 
-    @Column(name = "url_imagem_apoio")
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String urlImagemApoio;
 
     @Column(nullable = false)
     private Integer nivelDificuldade;
+
 
     // Foco no MVP: o QUE ELE GANHA AO CONCLUIR (Ex: 15min de video game)
     @Column(name = "descricao_recompensa", nullable = false)

@@ -32,6 +32,15 @@ h2 {
   margin: 30px 0;
 }
 
+.imagem-apoio {
+  max-width: 180px; /* Tamanho controlado para não distrair demasiado */
+  height: auto;
+  margin: 10px auto 20px auto; /* Dá um respiro entre o título e o texto */
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Sombra muito subtil */
+}
+
 /* --- DESTAQUE DA RECOMPENSA --- */
 .recompensa {
   background-color: #e8f8f5;

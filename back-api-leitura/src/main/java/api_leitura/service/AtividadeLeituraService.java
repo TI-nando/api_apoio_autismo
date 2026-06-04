@@ -40,4 +40,10 @@ public class AtividadeLeituraService {
 
         sessaoRepository.save(sessao);
     }
+
+    // Método para salvar a nova missão criada no Painel dos Pais
+    public AtividadeLeitura salvarNovaMissao(AtividadeLeitura novaMissao) {
+        return atividadeRepository.save(novaMissao);
+    }
+
 }
