@@ -1,5 +1,45 @@
 <main class="container">
 
+  <!-- Passagem Secreta: Botão discreto no canto inferior direito -->
+  <button class="btn-secreto" (click)="alternarPainelAdmin()">⚙️</button>
+
+  @if (mostrarPainelAdmin) {
+  <!-- ========================================== -->
+  <!-- TELA DOS PAIS / TERAPEUTAS                 -->
+  <!-- ========================================== -->
+  <div class="card-admin">
+    <h2>Área dos Pais e Terapeutas</h2>
+    <p>Crie uma nova missão personalizada com apoio visual.</p>
+
+    <div class="campo-form">
+      <label>Frase da Missão:</label>
+      <input type="text" [(ngModel)]="novaMissao.textoCurto" placeholder="Ex: O menino come maçã">
+    </div>
+
+    <div class="campo-form">
+      <label>Recompensa:</label>
+      <input type="text" [(ngModel)]="novaMissao.descricaoRecompensa" placeholder="Ex: 10 minutos de YouTube">
+    </div>
+
+    <div class="campo-form">
+      <label>Imagem de Apoio Visual:</label>
+      <input type="file" accept="image/*" (change)="onFileSelected($event)" class="input-arquivo">
+    </div>
+
+    @if (novaMissao.urlImagemApoio) {
+    <div class="preview-imagem">
+      <img [src]="novaMissao.urlImagemApoio" alt="Pré-visualização da imagem escolhida">
+    </div>
+    }
+
+    <button class="btn-salvar" (click)="salvarNovaMissao()">Gravar Nova Missão</button>
+    <button class="btn-voltar" (click)="alternarPainelAdmin()">Voltar para a Tela de Leitura</button>
+  </div>
+
+  } @else {
+  <!-- ========================================== -->
+  <!-- TELAS DA CRIANÇA (O FLUXO ORIGINAL)        -->
+  <!-- ========================================== -->
   @if (atividade && !mostrarTelinha && !sucesso) {
   <div class="card-missao">
     <h2>Missão de Leitura</h2>
@@ -7,7 +47,9 @@
     @if (atividade.urlImagemApoio) {
     <img [src]="atividade.urlImagemApoio" alt="Imagem de apoio visual" class="imagem-apoio">
     }
+
     <p class="texto-leitura">{{ atividade.textoCurto }}</p>
+
     <div class="recompensa">
       <span>🏆 Recompensa: </span>
       <strong>{{ atividade.descricaoRecompensa }}</strong>
@@ -61,6 +103,7 @@
   <div>
     <p>A carregar a próxima missão...</p>
   </div>
+  }
   }
 
 </main>

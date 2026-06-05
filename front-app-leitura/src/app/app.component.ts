@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms'; // <-- Essencial para os inputs da telinha
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule], // <-- FormsModule adicionado aqui
+  imports: [CommonModule, FormsModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -14,14 +14,23 @@ export class AppComponent implements OnInit {
 
   atividade: any = null;
 
-  // Variáveis que controlam qual tela aparece (o HTML estava sentindo falta delas!)
+  // Variáveis da tela da criança
   mostrarTelinha = false;
   sucesso = false;
 
-  // Variáveis para guardar os dados que você preencher no formulário
+  // Variáveis da avaliação
   tempoGastoMinutos: number = 2;
   precisouAjuda: string = 'false';
   nivelIrritabilidade: number = 1;
+
+  // --- NOVAS VARIÁVEIS PARA O PAINEL DOS PAIS ---
+  mostrarPainelAdmin = false; // Controla se o painel secreto está aberto
+  novaMissao = {
+    textoCurto: '',
+    descricaoRecompensa: '',
+    nivelDificuldade: 1,
+    urlImagemApoio: '' // É aqui que o código Base64 da imagem vai ficar guardado
+  };
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
@@ -40,13 +49,11 @@ export class AppComponent implements OnInit {
       });
   }
 
-  // Função chamada ao clicar em "Concluí a leitura!"
   abrirTelinha() {
     this.mostrarTelinha = true;
     this.cdr.detectChanges();
   }
 
-  // Função chamada para enviar a avaliação para o Java
   salvarSessao() {
     const payload = {
       tempoGastoSegundos: this.tempoGastoMinutos * 60,
@@ -64,6 +71,57 @@ export class AppComponent implements OnInit {
         error: (erro) => {
           console.error('Erro ao salvar a sessão no banco:', erro);
           alert('Deu erro ao salvar! Veja o console.');
+        }
+      });
+  }
+
+  // --- NOVAS FUNÇÕES DO PAINEL DOS PAIS ---
+
+  // Função para abrir e fechar a passagem secreta
+  alternarPainelAdmin() {
+    this.mostrarPainelAdmin = !this.mostrarPainelAdmin;
+    this.cdr.detectChanges();
+  }
+
+  // A função MÁGICA que lê a imagem do computador e converte para texto (Base64)
+  onFileSelected(event: any) {
+    const file = event.target.files[0]; // Pega o primeiro arquivo selecionado
+    if (file) {
+      const reader = new FileReader();
+
+      // O que fazer quando terminar de ler o arquivo:
+      reader.onload = (e: any) => {
+        // e.target.result contém o texto gigante em Base64
+        this.novaMissao.urlImagemApoio = e.target.result;
+        this.cdr.detectChanges();
+      };
+
+      // Manda o leitor processar a imagem
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Envia a missão pronta para a rota POST que criamos no Java
+  salvarNovaMissao() {
+    this.http.post('http://localhost:8080/api/atividades', this.novaMissao)
+      .subscribe({
+        next: (missaoSalva) => {
+          alert('Nova missão criada com sucesso!');
+
+          // Fecha o painel e já coloca a missão nova na tela!
+          this.mostrarPainelAdmin = false;
+          this.atividade = missaoSalva;
+          this.sucesso = false;
+          this.mostrarTelinha = false;
+
+          // Limpa o formulário para a próxima vez
+          this.novaMissao = { textoCurto: '', descricaoRecompensa: '', nivelDificuldade: 1, urlImagemApoio: '' };
+
+          this.cdr.detectChanges();
+        },
+        error: (erro) => {
+          console.error('Erro ao criar nova missão:', erro);
+          alert('Erro ao salvar nova missão. Verifique o console do navegador.');
         }
       });
   }
