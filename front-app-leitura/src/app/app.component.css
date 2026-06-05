@@ -207,3 +207,47 @@ h2 {
 .btn-voltar:hover {
   background-color: #7f8c8d;
 }
+
+/* --- TABELA DE HISTÓRICO E EVOLUÇÃO --- */
+.divisor {
+  margin: 35px 0 20px 0;
+  border: 0;
+  border-top: 2px dashed #ecf0f1;
+}
+
+.card-admin h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.tabela-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.tabela-historico {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+  background-color: white;
+}
+
+.tabela-historico th, .tabela-historico td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.tabela-historico th {
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.tabela-historico tbody tr:hover {
+  background-color: #fdfdfd;
+}

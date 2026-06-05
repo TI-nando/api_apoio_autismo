@@ -2,11 +2,14 @@ package api_leitura.controller;
 
 import api_leitura.dto.RegistroSessaoRequest;
 import api_leitura.model.AtividadeLeitura;
+import api_leitura.model.SessaoLeitura;
 import api_leitura.service.AtividadeLeituraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/atividades")
@@ -19,6 +22,12 @@ public class AtividadeLeituraController {
     @GetMapping("/proxima")
     public ResponseEntity<AtividadeLeitura> buscarProxima() {
         return ResponseEntity.ok(service.buscarProxima());
+    }
+
+    @GetMapping("/sessoes")
+    public ResponseEntity<List<SessaoLeitura>> listarSessoes() {
+        List<SessaoLeitura> historico = service.listarHistoricoSessoes();
+        return ResponseEntity.ok(historico);
     }
 
     @PostMapping("/{id}/concluir")

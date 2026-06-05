@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class AtividadeLeituraService {
@@ -44,6 +45,11 @@ public class AtividadeLeituraService {
     // Método para salvar a nova missão criada no Painel dos Pais
     public AtividadeLeitura salvarNovaMissao(AtividadeLeitura novaMissao) {
         return atividadeRepository.save(novaMissao);
+    }
+
+    // Busca todo o historico de sessoes para o painel dos pais
+    public List<SessaoLeitura> listarHistoricoSessoes() {
+        return sessaoRepository.findAll();
     }
 
 }

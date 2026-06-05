@@ -79,9 +79,24 @@ export class AppComponent implements OnInit {
 
   // Função para abrir e fechar a passagem secreta
   alternarPainelAdmin() {
-    this.mostrarPainelAdmin = !this.mostrarPainelAdmin;
-    this.cdr.detectChanges();
-  }
+      this.mostrarPainelAdmin = !this.mostrarPainelAdmin;
+      if (this.mostrarPainelAdmin) {
+        this.carregarHistorico();
+      }
+      this.cdr.detectChanges();
+    }
+
+    // NOVA FUNÇÃO: Busca os dados no Java
+    carregarHistorico() {
+      this.http.get<any[]>('http://localhost:8080/api/atividades/sessoes')
+        .subscribe({
+          next: (dados) => {
+            this.historicoSessoes = dados;
+            this.cdr.detectChanges();
+          },
+          error: (erro) => console.error('Erro ao buscar o histórico:', erro)
+        });
+    }
 
   // A função MÁGICA que lê a imagem do computador e converte para texto (Base64)
   onFileSelected(event: any) {
@@ -125,4 +140,14 @@ export class AppComponent implements OnInit {
         }
       });
   }
+
+  novaMissao = {
+      textoCurto: '',
+      descricaoRecompensa: '',
+      nivelDificuldade: 1,
+      urlImagemApoio: ''
+    };
+
+    // NOVA VARIÁVEL PARA O HISTÓRICO:
+    historicoSessoes: any[] = [];
 }

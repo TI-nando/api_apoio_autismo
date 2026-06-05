@@ -33,6 +33,42 @@
     }
 
     <button class="btn-salvar" (click)="salvarNovaMissao()">Gravar Nova Missão</button>
+
+    <!-- NOVA SEÇÃO: HISTÓRICO -->
+    <hr class="divisor">
+
+    <h3>Histórico de Evolução 📈</h3>
+    <div class="tabela-container">
+      <table class="tabela-historico">
+        <thead>
+        <tr>
+          <th>Data e Hora</th>
+          <th>Frase Lida</th>
+          <th>Tempo</th>
+          <th>Precisou de Ajuda?</th>
+          <th>Nível de Irritabilidade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- O Angular vai repetir esta linha para cada sessão salva no banco -->
+        @for (sessao of historicoSessoes; track sessao.id) {
+        <tr>
+          <td>{{ sessao.dataHora | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ sessao.atividadeLeitura?.textoCurto }}</td>
+          <td>{{ sessao.tempoGastoSegundos }}s</td>
+          <td>{{ sessao.precisouAjuda ? 'Sim 🟠' : 'Não (Sozinho) 🟢' }}</td>
+          <td>Nível {{ sessao.nivelIrritabilidade }}</td>
+        </tr>
+        } @empty {
+        <tr>
+          <td colspan="5">Nenhum histórico encontrado ainda. Faça a primeira leitura!</td>
+        </tr>
+        }
+        </tbody>
+      </table>
+    </div>
+    <!-- FIM DA SEÇÃO DO HISTÓRICO -->
+
     <button class="btn-voltar" (click)="alternarPainelAdmin()">Voltar para a Tela de Leitura</button>
   </div>
 
