@@ -38,6 +38,12 @@
     <hr class="divisor">
 
     <h3>Histórico de Evolução 📈</h3>
+
+    <!-- O CANVAS DO GRÁFICO ENTRA AQUI -->
+    <div class="grafico-container">
+      <canvas id="meuGrafico"></canvas>
+    </div>
+
     <div class="tabela-container">
       <table class="tabela-historico">
         <thead>
@@ -133,6 +139,10 @@
       <span>🏆 Pode aproveitar os: </span><br>
       <strong>{{ atividade.descricaoRecompensa }}</strong>
     </div>
+
+    <button class="btn-voltar" style="margin-top: 30px;" (click)="reiniciarCiclo()">
+      ↻ Voltar e Iniciar Nova Missão
+    </button>
   </div>
 
   } @else {
